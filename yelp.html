@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yelp Test</title>
+    <link rel="stylesheet" href="css/style.css">
+		<script type="text/javascript" src="js/libs/sha1.js"></script>
+		<script type="text/javascript" src="js/libs/oauth.js"></script>
+		<script src="js/libs/jquery.min.js"></script>
+		<script language="javascript" src="js/yelp.js"></script>	
+</head>
+
+<body>
+(400 beach street Santa Cruz California
+    <form id="form-container" class="form-container" ACTION="http://api.yelp.com/v2/search">
+        <label for="searchTerm">SearchTerm: </label><input type="text" id="searchTerm" name="searchTerm" value='food'><br/>
+        <label for="location">Location: </label><input type="text" id="location" name="location" value='Santa Cruz California'><br/>				
+        <label for="latitude">Latitude: </label><input type="text" id="latitude" name="latitude"  value='36.299812'><br/>
+        <label for="longitude">Longitude: </label><input type="text" id="longitude" name="longitude" value='-120.890778'><br/>
+        <button id="submit-btn" onClick='sign(); return false;' >Submit</button>
+    </form>
+	<br/>
+	<div id="yelpReviews">
+	</div>
+	<div id="yelpDeals">
+	</div>
+</body>
+</html>
