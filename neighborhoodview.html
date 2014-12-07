@@ -1,0 +1,68 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+		<meta http-equiv="Cache-control" content="no-cache"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Santa Cruz Boardwalk</title>
+    <link rel="stylesheet"  href="css/style.css"/>
+		
+		<!--yelp scripts-->
+		<script type="text/javascript" src="js/libs/sha1.js" ></script>
+		<script type="text/javascript" src="js/libs/oauth.js" ></script>
+		<script type="text/javascript" src="js/libs/jquery.min.js" ></script>
+		<script type="text/javascript" src="js/yelpConstants.js" ></script>	
+		<script type="text/javascript" src="js/yelpMarker.js" ></script>	
+		<script type="text/javascript" src="js/yelpData.js" ></script>	
+		<script type="text/javascript" src="js/yelp.js" ></script>	
+  </head>
+  <body>
+    <div id="panel" style="margin-left:-100px">
+      <input type="button" value="Toggle Street View" onclick="gmap.toggleStreetView();"></input>
+    </div>
+    <div id="map-canvas"></div>
+		<div id="searchBar" class="floating">
+		<form id="form-container" class="form-container" >
+        <input type="text" id="searchTerm" name="searchTerm" value='food'/>
+				<input type="button" onClick='yelp.searchYelp(); return false;' value='GO!'>
+        <input type="hidden" id="location" name="location" value='400 Beach street, Santa Cruz California'>
+        <input type="hidden" id="latitude" name="latitude"  value='36.963985'>
+        <input type="hidden" id="longitude" name="longitude" value='-122.019292'>
+    </form>
+			<div id="yelpDeals" class="business-list">
+			</div>
+		</div>
+		
+		<!--google map scripts-->
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+		<script src="js/GoogleMap.js"></script>
+		
+		<!--initializing of yelp & map elements-->
+		<script type="text/javascript">
+		var yelp = {};
+		var gmap = {};
+		function initialize()
+		{
+			//set up the map
+			var santaCruzBoardwalk = new google.maps.LatLng(36.963985, -122.019292); //new google.maps.LatLng(36.9602286, -122.0199624);
+			gmap = new GoogleMap('map-canvas',santaCruzBoardwalk);
+		
+			//set up Yelp
+			yelp = new Yelp(gmap,
+												'yelp.fillYelpData',
+												'#location',
+												'#latitude',
+												'#longitude',
+												'#searchTerm',
+												500,
+												'#yelpDeals');
+		};
+		
+		
+			google.maps.event.addDomListener(window, 'load', initialize);
+		</script>
+  </body>
+</html>
+

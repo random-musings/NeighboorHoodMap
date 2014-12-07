@@ -1,79 +1,142 @@
-var YELPURI ="http://api.yelp.com/v2/search";
-var HTTPMETHOD = "GET"
-var CALLBACK ="<CALLBACK";
-var LONGITUDE = "<LONGITUDE>";
-var LATITUDE = "<LATITITUDE>";
-var LOCATION = "<LOCATION>";
-var SEARCHTERM = "<SEARCHTERM>";
-var TIMESTAMP ="<TIMESTAMP>";
-var SW_LATITUDE = 38;
-var SW_LONGITUDE = 122;
-var NE_LATITUDE = 35;
-var NE_LONGITUDE = -118;
-var OAUTHCONSUMERKEY = "Eqqi19ncmOaaRY8OlZMPog";
-var OAUTHTOKEN = "GkjmQjkZoVeNZyAPIAiCYMl6xctechN8";
-var OAUTHSIGNATUREMETHOD = "HMAC-SHA1";
-var OAUTHSIGNATURE  ="<OAUTHSIGNATURE>";
-var OAUTHCONSUMERSECRET = "zOLX5jD0z9NeF5BQjkkXl2KXV7A";
-var OAUTHTOKENSECRET = "Vbxnk7Wr1kZI1Px7KwWhNCqatwg";
-var OAUTHNONCE = "<NONCE>";
-var OAUTHVERSION = "1.0";
+/*
+* @class
+* This file handles the yelp calls and puts everything on the google map
+* 
+* 
+* javascript reference files
+* YelpConstants.js
+* YelpData.js
+*	GoogleMap.js
+* Oauth.js
+* Sha.js
+* jquery.min.js
+*/
 
+/*
+* @public
+* @constructor
+* @param {map}  the GoogleMap object
+* @param {initialLocation} GPS coordinates of the map we will show
+*/
+var Yelp = function(map, //the google map to add/remove markers from
+					yelpCallBackFunction, //the function called after yelp returns
+					locationId, //the html element containing the text string
+					latitudeId, //the html element for the latitude 
+					longitudeId, //html element id for the longitude
+					termId, //html element ID for the search phrase
+					radius, //the max distance to search
+					businessListElt //the html element to store businesses in
+					)
+{
+	this.map = map;
+	this.callBack = yelpCallBackFunction;
+	this.yelpData ={};
+	this.locationId = locationId;// $("#location").val();
+	this.latitudeId = latitudeId; //$("#latitude").val();
+	this.longitudeId = longitudeId; //$("#longitude").val();
+	this.termId = termId; //$("#searchTerm").val();
+	this.radius = radius; //"5000" ft
+	this.businessListElt = businessListElt; 
+};
 
-//OAUTH Calculated Parameters
-var normalizedParameters = "";
-var signatureBaseString = "";
-var signature = "";
-var authorizationHeader ="";
-
-
-function freshTimestamp() {
-   return OAuth.timestamp();
+/*
+* @returns long
+*	@description 
+*		gets the UTC time in milliseconds since 1970
+*/
+Yelp.prototype.freshTimestamp = function()
+{
+ return OAuth.timestamp();
 }
-function freshNonce() {
-   return OAuth.nonce(11);
-}		
 
 
-var yelpParameters = 
-						//"bounds="+SW_LATITUDE+","+SW_LONGITUDE+","+NE_LATITUDE+","+NE_LONGITUDE+
-						"callback="+CALLBACK+ //this is a jsonp callback parameter
-						"&cli="+LATITUDE+","+LONGITUDE+
-						"&location="+LOCATION+
-						"&term="+SEARCHTERM
-						;
-				
-						
-function parseYelpError(data)
+/*
+* @returns 11 random characters
+*	@description 
+*		gets a 11 character salt to use for encrypting the secret keys
+*/
+Yelp.prototype.freshNonce = function()
+{
+ return OAuth.nonce(11);
+}
+
+/*
+* @returns void
+*	@description 
+*		prints out the error encountered when the ajax call to yelp fails
+*/
+Yelp.prototype.parseYelpError = function(data)
 {
 	console.log("ERROR PARSING YELP");
 	console.log(data);
 }
-						
-function parseYelp(data)
+
+
+/*
+* @returns void
+*	@description 
+*		when the call to yelp succeeds this parses the returned data and 
+*		updates map markers
+*/
+Yelp.prototype.fillYelpData = function(data)
 {
 	console.log("IN PARSE YELP");
 	console.log(data);
+	this.yelpData = new YelpData(data,false);
+	var divElt = document.createElement("div");
+	divElt.innerHTML = this.yelpData.FormatListView();
+	$(this.businessListElt).innerHTML="";
+	$(this.businessListElt).empty();
+	$(this.businessListElt).append(divElt);
+	
+	//clear & add the map markers
+	this.map.deleteMarkers();
+	var i=0;
+	for(i in this.yelpData.markers)
+	{
+		var yelpMarker = this.yelpData.markers[i];
+		if(yelpMarker)
+		{
+			this.map.addMarker( 
+					new google.maps.LatLng(yelpMarker.latitude, yelpMarker.longitude),
+					yelpMarker.icon,
+					yelpMarker.name);
+		}
+	}
 }
 
 
-function getYelpParams()
+/*
+* @returns string
+*	@description 
+*		fills in the YELP url with the correct search information from the form
+*/
+Yelp.prototype.getYelpParams = function()
 {
-	var location = $("#location").val();
-	var latitude = $("#latitude").val();
-	var longitude = $("#longitude").val();
-	var term = $("#searchTerm").val();
-	
-	return yelpParameters.replace(SEARCHTERM,term)
+	var location= $(this.locationId).val();//"#location"
+	var latitude = $(this.latitudeId).val();//"#latitude"
+	var longitude = $(this.longitudeId).val();//"#longitude"
+	var term = $(this.termId).val();//"#searchTerm"
+	return YELPPARAMATERS.replace(SEARCHTERM,term)
 								.replace(LOCATION,location)
 								.replace(LATITUDE,latitude)
 								.replace(LONGITUDE,longitude)
-								.replace(CALLBACK,'parseYelp');
+								.replace(CALLBACK,this.callBack)
+								.replace(RADIUSFILTER,this.radius);
 }
 
 
-function sign() {
-	var yelpFormParams = getYelpParams()
+/*
+* @returns false
+*	@description 
+*		initiaies the call to yelp
+*/
+Yelp.prototype.searchYelp = function()
+{
+	var signatureBaseString = "";
+	var normalizedParameters = "";
+	var signature = "";
+	var yelpFormParams = this.getYelpParams();
 	var accessor = { consumerSecret: OAUTHCONSUMERSECRET
 								 , tokenSecret   : OAUTHTOKENSECRET};
 	var message = { method: HTTPMETHOD
@@ -83,40 +146,33 @@ function sign() {
 	message.parameters.push(["oauth_version", OAUTHVERSION]);
 	message.parameters.push(["oauth_consumer_key", OAUTHCONSUMERKEY]);
 	message.parameters.push(["oauth_token", OAUTHTOKEN]);
-	message.parameters.push(["oauth_timestamp", freshTimestamp()]);
-	message.parameters.push(["oauth_nonce", freshNonce()]);
+	message.parameters.push(["oauth_timestamp", this.freshTimestamp()]);
+	message.parameters.push(["oauth_nonce", this.freshNonce()]);
 	
 	OAuth.SignatureMethod.sign(message, accessor);
 	normalizedParameters = OAuth.SignatureMethod.normalizeParameters(message.parameters);
 	signatureBaseString = OAuth.SignatureMethod.getBaseString(message);
 	signature =  OAuth.getParameter(message.parameters, "oauth_signature");
-	authorizationHeader = OAuth.getAuthorizationHeader("", message.parameters);
+	
 
-	//replace GET& with GET\u0026
+	//replace GET& with GET\u0026 cause yelp fails if we leave it in
 	signatureBaseString = signatureBaseString.replace("GET&","GET\\u0026");
 	
-	//console.log("signatureBaseString:"+signatureBaseString);
-	//console.log("signature:"+signature+"  encoded:"+ encodeURIComponent(signature));
-	//console.log("authorizationHeader:"+authorizationHeader);
-	//console.log("normalizedParameters:"+normalizedParameters);
-	
-	
 	//what we will send
-	var yelpHttp = YELPURI ;
+	var yelpHttp = YELPURI;
 	var yelpBody =  normalizedParameters
 								+ "&oauth_signature="+encodeURIComponent(signature);
-	console.log(yelpHttp+"?"+yelpBody);
+	var yelpUrl = yelpHttp+"?"+yelpBody;
+	console.log(yelpUrl);
 	
-	$.ajaxSetup({cache: false});
 	$.ajax({
-			url: yelpHttp+"?"+yelpBody,
+			url: yelpUrl,
 			dataType: "jsonp",
 			type: "GET",
 			cache: true, //very very important disables the _=[timestamp] at the end of the request
-		//	success:function(data){console.log("success"); parseYelp(data);},
-			error: function(data){console.log("error"); console.log(data );},
-			jsonpCallback: 'parseYelp'
+			success: function(data){this.fillYelpData(data);},
+			jsonpCallback: this.callBack
 		});
 	return false;
-}
+};
 
