@@ -1,0 +1,62 @@
+
+
+var YelpBusiness = function(
+									businessIx,
+									businessId,
+									businessName,
+									businessUrl,
+									mobileUrl,
+									ratingsImg,
+									reviewCount,
+									latitude,
+									longitude,
+									yelpCategories,
+									yelpDeals)
+{
+	this.name = ko.observable(businessName);
+	this.businessId = ko.observable(businessId);
+	this.businessIx = ko.observable(businessIx);
+	this.businessUrl = ko.observable(businessUrl);
+	this.ratingsImg = ko.observable(ratingsImg);
+	this.reviewCount = ko.observable(reviewCount);
+	this.mobileUrl = ko.observable(mobileUrl);
+	this.latitude = ko.observable(latitude);
+	this.longitude = ko.observable(longitude);
+	this.categories = ko.observableArray();
+	this.deals = ko.observableArray();
+	this.loadDeals(yelpDeals);
+	this.loadCategories(yelpCategories);
+
+};
+
+
+YelpBusiness.prototype.loadDeals = function (deals)
+{
+	this.deals=[];
+	for (dealIx in deals)
+	{
+		var yelpDeal = deals[dealIx];
+		if(yelpDeal)
+		{
+			this.deals.push(yelpDeal);
+		}
+	}
+}
+
+
+YelpBusiness.prototype.loadCategories = function (categories)
+{
+	this.categories=[];
+	
+	for (categoryIx in categories)
+	{
+		var category = categories[categoryIx];
+		if(category)
+		{
+			this.categories.push(category);
+		}
+	}
+	
+}
+
+

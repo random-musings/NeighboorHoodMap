@@ -9,12 +9,18 @@
     <title>Santa Cruz Boardwalk</title>
     <link rel="stylesheet"  href="css/style.css"/>
 		
+		<!--knockout scripts-->
+		<script type="text/javascript" src="js/libs/knockout-3.2.0.js" ></script>
+		<script type="text/javascript" src="js/libs/knockout.simpleGrid.3.0.js" ></script>
+		
 		<!--yelp scripts-->
 		<script type="text/javascript" src="js/libs/sha1.js" ></script>
 		<script type="text/javascript" src="js/libs/oauth.js" ></script>
 		<script type="text/javascript" src="js/libs/jquery.min.js" ></script>
 		<script type="text/javascript" src="js/yelpConstants.js" ></script>	
 		<script type="text/javascript" src="js/yelpMarker.js" ></script>	
+		<script type="text/javascript" src="js/yelpResultsView.js" ></script>	
+		<script type="text/javascript" src="js/yelpBusiness.js" ></script>	
 		<script type="text/javascript" src="js/yelpData.js" ></script>	
 		<script type="text/javascript" src="js/yelp.js" ></script>	
   </head>
@@ -24,15 +30,35 @@
     </div>
     <div id="map-canvas"></div>
 		<div id="searchBar" class="floating">
-		<form id="form-container" class="form-container" >
-        <input type="text" id="searchTerm" name="searchTerm" value='food'/>
-				<input type="button" onClick='yelp.searchYelp(); return false;' value='GO!'>
-        <input type="hidden" id="location" name="location" value='400 Beach street, Santa Cruz California'>
-        <input type="hidden" id="latitude" name="latitude"  value='36.963985'>
-        <input type="hidden" id="longitude" name="longitude" value='-122.019292'>
-    </form>
+			<form id="form-container" class="form-container" >
+					<input type="text" id="searchTerm" name="searchTerm" value=''/><br/>
+					Coupons? <input type="checkbox" id="dealFilter" name="dealFilter" value="deal"/> 
+					<input type="button" onClick='yelp.applyFilter(); return false;' value='Filter'>
+			</form>
+
 			<div id="yelpDeals" class="business-list">
+				<table>
+					<thead>
+					</thead>
+					<tbody id="tableBindings" data-bind="foreach: yelp.resultsView.retailers">
+						<tr>
+							<td data-bind="text: businessIx"></td>
+							<td> <a data-bind="attr: {href: businessUrl}"><span class="yelpBusiness" data-bind="text: name"></span></a></td>
+							<td> <img data-bind="attr: {src: ratingsImg}"></span></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan="2"> 
+								<span data-bind="foreach: categories">
+									<span data-bind="text: $data"></span>
+								</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div id='navBar'><a  href='#' id='nav-less' onclick='yelp.loadPrev()'>Prev</a> &nbsp;<a href='#'  id='nav-more' onclick='yelp.loadNext()'>Next</a> </div>
 			</div>
+			
 		</div>
 		
 		<!--google map scripts-->
@@ -43,23 +69,31 @@
 		<script type="text/javascript">
 		var yelp = {};
 		var gmap = {};
+		var yelpRetailers = {};
+	
+
+		
 		function initialize()
 		{
 			//set up the map
-			var santaCruzBoardwalk = new google.maps.LatLng(36.963985, -122.019292); //new google.maps.LatLng(36.9602286, -122.0199624);
+			var santaCruzBoardwalk = new google.maps.LatLng(LATITUDE, LONGITUDE); //new google.maps.LatLng(36.9602286, -122.0199624);
 			gmap = new GoogleMap('map-canvas',santaCruzBoardwalk);
 		
 			//set up Yelp
 			yelp = new Yelp(gmap,
 												'yelp.fillYelpData',
-												'#location',
-												'#latitude',
-												'#longitude',
 												'#searchTerm',
-												500,
-												'#yelpDeals');
+												1600,
+												'yelpDeals');
+			//yelp.yelpData.retailers.push( new YelpBusiness(1,"bus1","business a","www.mozilla.ca","www.mozilla.ca","img/yelpReview.jpg",2,36,121,["food","dinner"],[]));
+			//yelp.yelpData.retailers.push( new YelpBusiness(2,"bus2","business b","www.google.ca","www.mozilla.ca","img/yelpReview.jpg",3,37,121,["supper","dessert"],[]));
+			//yelp.yelpData.retailers.push( new YelpBusiness(3,"bus3","business c","www.yahoo.ca","www.mozilla.ca","img/yelpReview.jpg",4,36,120,["snack","breakfast"],[]));
+			yelp.searchYelp(0);
+
 		};
 		
+		
+
 		
 			google.maps.event.addDomListener(window, 'load', initialize);
 		</script>

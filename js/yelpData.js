@@ -2,7 +2,7 @@
 
 var YelpData = function(yelpResponseData)
 {
-	this.markers = {};
+	this.markers = [];
 	this.deals = {};
 	this.businesses = [];
 	this.listViewData = {};
@@ -10,109 +10,105 @@ var YelpData = function(yelpResponseData)
 	this.itemsToRetrieve = 10;
 	this.isMobile = false;
 	this.searchTerms ={};
-	this.offset =0;
 	this.loadYelpData(yelpResponseData, false);
 
 };
 
+		
+		
+/*
+*  @returns void
+*	@description 
+*		loads the JSON data from yelp into a retailers array (for use by knockout)
+*   	keeps the json data in a businesses object so that additional details can be queried at a later date
+*/
 YelpData.prototype.loadYelpData = function (yelpResponseData, append)
 {
+
+	if(!yelpResponseData)
+		return;
 	if(!append)
 	{
 		this.businesses = [];
 	}
-	var businessIx = 0;
+	
 	var numResults  = yelpResponseData.businesses.length;
+	var busCount = this.businesses.length;
 	for( businessIx in yelpResponseData.businesses)
 	{
 		var business = yelpResponseData.businesses[businessIx];
 		if(business)
 		{
-			this.businesses[ Math.abs(this.offset) + Math.abs(businessIx)] = business;
+			busCount++;
+			business.ix = busCount; //record the order of the search results
+			var Categories = [];
+			for(catIx in business.categories)
+			{
+				Categories.push(business.categories[catIx][0]);
+			}
+			var yelpBusiness = new YelpBusiness(
+										business.ix,
+										business.id,
+										business.name,
+										business.url,
+										business.mobile_url,
+										business.rating_img_url_small,
+										business.review_count,
+										business.location.coordinate.latitude,
+										business.location.coordinate.longitude,
+										Categories,
+										business.deals
+										);
+			this.businesses.push(yelpBusiness);
 		}
 	}
-	this.offset  = append? this.offset+ numResults:numResults;
-	this.LoadLocationMarker(append);
+	this.currentItemCount  = append? this.currentItemCount+ numResults:numResults;
+	this.LoadLocationMarker();
 };
 
-YelpData.prototype.LoadLocationMarker = function(append)
+
+/*
+*  @returns string
+*	@description 
+*	create a colored pin icon - red is normal pin markers
+*  green indicates a deal is available
+*/
+YelpData.prototype.getPinIcon = function(business)
+{
+	var color = (business.deals.length>0)?PINGREEN:PINRED;
+	return GOOGLEPIN.replace(PINCHAR,business.businessIx)
+									.replace(PINCOLOR,color);
+};
+
+
+/*
+*  @returns void
+*	@description 
+*			create an array of pin markers so that they can be placed on the google map
+*/
+YelpData.prototype.LoadLocationMarker = function()
 {
 	//clear out the existing markers
-	if(!append)
-	{
+
 		this.markers = [];
-	}
+
 	var businessIx = 0;
 	for( businessIx in this.businesses)
 	{
 		var business = this.businesses[businessIx];
 		if(business)
 		{
+			var pinMarker = this.getPinIcon(business);
 			var yelpMarker = new YelpMarker(business.name,
 												business.id,
-												business.location.coordinate.latitude,
-												business.location.coordinate.longitude,
-												GOOGLEPIN.replace(PINCHAR,businessIx)); //icon
+												business.latitude,
+												business.longitude,
+												pinMarker); //icon
 			this.markers.push(yelpMarker);
+			
 		}
 	}
 };
 
-YelpData.prototype.LoadDealMarkers = function(append)
-{
-	var businessIx = 0;
-	for(businessIx in this.businesses)
-	{
-		var business = this.businesses[businessIx];
-		if(business && business.deals)
-		{
-			var yelpMarker = new YelpMarker(business.name,
-																			business.id,
-																			business.location.coordinate.latitude,
-																			business.location.coordinate.longitude,
-																			YELPDEALICON);
-			this.markers.push(yelpMarker);
-		}
-	}
-};
 
-YelpData.prototype.FormatListView = function(isMobile)
-{
-	var businessHTML = "";
-	var businessIx = 0;
-	for( businessIx in this.businesses)
-	{
-		var business = this.businesses[businessIx];
-		if(business)
-		{
-			businessHTML += "<hr/>";
-			businessHTML += this.FormatBusiness(business, isMobile);
-		}
-	}
-	console.log("YELP DATA FormatListView:"+businessHTML);
-	return businessHTML;
-};
 
-YelpData.prototype.FormatBusiness = function(business,isMobile)
-{
-	var businessHTML = "";
-	if(business)
-	{
-		var url = isMobile?business.mobile_url:business.url;
-		businessHTML += "<a href='"+url+"'>"+business.name+"</a> ";
-		businessHTML += "<img src='"+business.rating_img_url_small+"'/><br/>";
-		businessHTML += " "+business.categories[0][0]+"<br/>";
-	//	businessHTML += business.snippet_text+"<br/>";
-		
-		if(business.deals || business.gift_certificates)
-		{ 
-			var couponCount = 0;
-			if(business.deals)
-				couponCount += business.deals.length;
-			if(business.gift_certificates)
-				couponCount += business.gift_certificates.length;
-			businessHTML += "Coupons:"+couponCount+"<br/>";
-		}
-	}
-	return businessHTML;
-}

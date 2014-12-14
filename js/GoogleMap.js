@@ -37,7 +37,7 @@ GoogleMap.prototype.initMap = function()
 {
 	this.mapOptions = {
 		center: this.mapLocation,
-		zoom:16,
+		zoom:ZOOM,
 		streetViewControl: false
 	}
 	 this.map = new google.maps.Map(document.getElementById(this.mapId),
