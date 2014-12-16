@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
 		<meta http-equiv="Cache-control" content="no-cache"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width">
     <title>Santa Cruz Boardwalk</title>
     <link rel="stylesheet"  href="css/style.css"/>
 		
@@ -25,17 +25,18 @@
 		<script type="text/javascript" src="js/yelp.js" ></script>	
   </head>
   <body>
-    <div id="panel" style="margin-left:-100px">
-      <input type="button" value="Toggle Street View" onclick="gmap.toggleStreetView();"></input>
-    </div>
+   
     <div id="map-canvas"></div>
 		<div id="searchBar" class="floating">
-			<form id="form-container" class="form-container" >
-					<input type="text" id="searchTerm" name="searchTerm" value=''/><br/>
-					Coupons? <input type="checkbox" id="dealFilter" name="dealFilter" value="deal"/> 
-					<input type="button" onClick='yelp.applyFilter(); return false;' value='Filter'>
-			</form>
-
+			<div class="business-list">
+				<form id="form-container" class="form-container1" >
+						<input type="text" id="searchTerm" name="searchTerm" value='' oninput="yelp.filterResults()"/> 
+						<input type="button" onClick='yelp.applyFilter(); return false;' value='Filter'>
+						<br/>
+						Coupons? <input type="checkbox" id="dealFilter" name="dealFilter" value="deal" onClick="yelp.reload()"/> 
+						
+				</form>
+			</div>
 			<div id="yelpDeals" class="business-list">
 				<table>
 					<thead>
@@ -43,7 +44,7 @@
 					<tbody id="tableBindings" data-bind="foreach: yelp.resultsView.retailers">
 						<tr>
 							<td data-bind="text: businessIx"></td>
-							<td> <a data-bind="attr: {href: businessUrl}"><span class="yelpBusiness" data-bind="text: name"></span></a></td>
+							<td> <a data-bind="attr: {href: businessUrl}" target="_new"><span class="yelpBusiness" data-bind="text: name"></span></a></td>
 							<td> <img data-bind="attr: {src: ratingsImg}"></span></td>
 						</tr>
 						<tr>

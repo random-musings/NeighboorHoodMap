@@ -83,20 +83,22 @@ GoogleMap.prototype.toggleStreetView = function()
 */
 GoogleMap.prototype.addMarker = function(pLocation,pIcon,pTitle)
 {
-console.log("in add marker "+pIcon+" "+pTitle);
+	console.log("in add marker "+pIcon+" "+pTitle);
 	var marker = new google.maps.Marker({
 		position: pLocation,
 		map: this.map,
 		icon: pIcon,
 		title: pTitle});
-	
 
-
-    // hmmmm, I wonder what this is about...
+    //create the information window
     google.maps.event.addListener(marker, 'click', function() {
       // your code goes here!
 			
 			infoWindow.open(yelp.map.map,marker);
+			var business = yelp.findBusiness (marker);
+			var details = "";
+			
+			//add screen shot
 			var pano = null;
 			google.maps.event.addListener(infoWindow, 'domready', function () {
 					if (pano != null) {
@@ -112,13 +114,33 @@ console.log("in add marker "+pIcon+" "+pTitle);
 					});
 					pano.bindTo("position", marker);
 					pano.setVisible(true);
+					
+					
+					if(business!=null)
+				{
+					details = document.createElement("div");
+					details.innerHTML = infoWindowDetails.replace('NAME',business.name)
+						 .replace('ADDRESS', business.address)
+						 .replace('REVIEWURL',business.businessUrl)
+						 .replace('REVIEW', business.reviewCount);
+				
+				}
+				$("#details").empty();
+				document.getElementById("details").appendChild( details);
+
 			});					
     });
 		
 	this.mapMarkers.push(marker);
 };
 
-var infoWindow = new google.maps.InfoWindow({content:'<div id="content" style="width:250px;height:300px;"></div>'});
+
+var infoWindowContent = '<div id="content" style="width:300px;height:450px;"></div><div id="details" style="background-color:white;font-size:1.5em;width:100%;height:150px;top:300px;position:absolute;z-index:999" ></div>';
+var infoWindowDetails =		' NAME<br/>'+
+																					'  ADDRESS <br/> '+
+																					'  <a href="REVIEWURL" target="_new">REVIEW reviews</a>';
+
+var infoWindow = new google.maps.InfoWindow({content:infoWindowContent});
 		
 
 		
@@ -169,32 +191,3 @@ GoogleMap.prototype.deleteMarkers = function() {
   this.mapMarkers = [];
 };
 
-
-
-
-/*
-console.log("in googlemap.js");
-console.log("map "+gmap.mapId);
-console.log("map "+document.getElementById("map-canvas"));
-console.log("panorama  "+gmap.panorama);
-
-
-var cafe1=new google.maps.LatLng(36.9602286,-122.0199624);
-var cafe1Icon ='http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00';
-var cafe1Title ="cafe1";
-
-var cafe2=new google.maps.LatLng(36.9602286,-122);
-var cafe2Icon ='http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe|FFFF00';
-var cafe2Title ="cafe2";
-
-var cafe3=new google.maps.LatLng(36.961,-122.0199624);
-var cafe3Icon ='http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|00FF00';
-var cafe3Title ="cafe3";
-
-console.log("adding markers  "+gmap.mapMarkers);
-
-gmap.addMarker(cafe1,cafe1Icon,cafe1Title);
-gmap.addMarker(cafe2,cafe2Icon,cafe2Title);
-gmap.addMarker(cafe3,cafe3Icon,cafe3Title);
-console.log("adding markers  "+gmap.mapMarkers);
-*/

@@ -5,6 +5,7 @@ var YelpBusiness = function(
 									businessId,
 									businessName,
 									businessUrl,
+									businessAddress,
 									mobileUrl,
 									ratingsImg,
 									reviewCount,
@@ -12,7 +13,7 @@ var YelpBusiness = function(
 									longitude,
 									yelpCategories,
 									yelpDeals,
-									reviewSnippet,
+									reviewCount,
 									reviewUrl)
 {
 	this.name = businessName;
@@ -22,13 +23,14 @@ var YelpBusiness = function(
 	this.ratingsImg = ratingsImg;
 	this.reviewCount = reviewCount;
 	this.mobileUrl = mobileUrl;
+	this.address = businessAddress;
 	this.latitude = latitude;
 	this.longitude = longitude;
 	this.categories = [];
 	this.deals = [];
 	this.loadDeals(yelpDeals);
 	this.loadCategories(yelpCategories);
-	this.review = reviewSnippet;
+	this.reviewCount = reviewCount;
 	this.reviewUrl = reviewUrl;
 };
 

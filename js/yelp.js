@@ -232,7 +232,7 @@ Yelp.prototype.matchesFilter = function(business,filterText)
 {
 		filterText = filterText.toUpperCase();
 		
-		if($("#dealFilter").checked())
+		if($("#dealFilter").is(':checked'))
 		{
 			return (business.deals.length>0);
 		}
@@ -298,6 +298,33 @@ Yelp.prototype.loadNext = function ()
 /*
 * @returns void
 *	@description 
+*   reloads  businesses into the knockout observable array
+*  called when the coupons is clicked or unclicked
+*/
+Yelp.prototype.reload = function()
+{
+	this.loadResultsView(this.currentViewWindow);
+}
+
+/*
+* @returns void
+*	@description 
+*   reloads  businesses into the knockout observable array
+*  called when the the search filter is changed
+*/
+Yelp.prototype.filterResults = function ()
+{
+	if($(this.termId).val().length>=3 || $(this.termId).val().length===0 )
+	{
+		this.reload();
+	}
+	
+};
+
+
+/*
+* @returns void
+*	@description 
 *		loads the previous LIMIT(10) results into the knockout observable array
 */
 Yelp.prototype.loadPrev = function ()
@@ -312,3 +339,19 @@ Yelp.prototype.loadPrev = function ()
 	}	
 	this.loadResultsView(this.currentViewWindow);
 }
+
+
+Yelp.prototype.findBusiness = function (marker)
+{
+	var title = marker.title;
+	var yelpIx;
+	for(yelpIx in this.yelpData.businesses)
+	{
+		 var business = this.yelpData.businesses[yelpIx];
+		 if(business.name === title)
+		 {
+				return business;
+		 }
+	}
+	return null;
+};

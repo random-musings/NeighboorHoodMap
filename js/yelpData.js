@@ -51,19 +51,22 @@ YelpData.prototype.loadYelpData = function (yelpResponseData, append)
 										business.id,
 										business.name,
 										business.url,
+										this.formatAddress(business),
 										business.mobile_url,
 										business.rating_img_url_small,
 										business.review_count,
 										business.location.coordinate.latitude,
 										business.location.coordinate.longitude,
 										Categories,
-										business.deals
+										business.deals,
+										business.review_count,
+										business.snippet_image_url
 										);
 			this.businesses.push(yelpBusiness);
 		}
 	}
 	this.currentItemCount  = append? this.currentItemCount+ numResults:numResults;
-	this.LoadLocationMarker();
+	this.loadLocationMarker();
 };
 
 
@@ -86,7 +89,7 @@ YelpData.prototype.getPinIcon = function(business)
 *	@description 
 *			create an array of pin markers so that they can be placed on the google map
 */
-YelpData.prototype.LoadLocationMarker = function()
+YelpData.prototype.loadLocationMarker = function()
 {
 	//clear out the existing markers
 
@@ -110,5 +113,20 @@ YelpData.prototype.LoadLocationMarker = function()
 	}
 };
 
+
+/*
+*  @returns string
+*	@description 
+*			create a string corresponding to the business address
+*/
+YelpData.prototype.formatAddress = function(business)
+{
+	var address = "";
+	address = business.location.address.join('<br/> ');
+	address +='<br/>  '+business.location.city+' ';
+	address +=business.location.country_code+'  ';
+	address +=business.location.postal_code+'  ';
+	return address;
+}
 
 
