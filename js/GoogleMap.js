@@ -127,7 +127,7 @@ GoogleMap.prototype.addMarker = function(pLocation,pIcon,pTitle)
 				}
 				$("#details").empty();
 				document.getElementById("details").appendChild( details);
-
+			
 			});					
     });
 		
@@ -135,7 +135,7 @@ GoogleMap.prototype.addMarker = function(pLocation,pIcon,pTitle)
 };
 
 
-var infoWindowContent = '<div id="content" style="width:300px;height:450px;"></div><div id="details" style="background-color:white;font-size:1.5em;width:100%;height:150px;top:300px;position:absolute;z-index:999" ></div>';
+var infoWindowContent = '<div id="content" class="infoWindowPano" style="width:175px;height:250px;"></div><div id="details" style="	background-color:white;	font-size:1em;	width:181px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 var infoWindowDetails =		' NAME<br/>'+
 																					'  ADDRESS <br/> '+
 																					'  <a href="REVIEWURL" target="_new">REVIEW reviews</a>';

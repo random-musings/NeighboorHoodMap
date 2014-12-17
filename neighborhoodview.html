@@ -28,10 +28,18 @@
    
     <div id="map-canvas"></div>
 		<div id="searchBar" class="floating">
+			<div>
+				<form>
+					<input type="button"  value="&#8592;" id='btnMoveLeft' onClick='yelp.move("0%");return false;'>
+					<input type="button" value="&#8594;" id='btnMoveRight' onClick='yelp.move("80%");return false;'>
+				</form>
+			</div>
 			<div class="business-list">
 				<form id="form-container" class="form-container1" >
+						
 						<input type="text" id="searchTerm" name="searchTerm" value='' oninput="yelp.filterResults()"/> 
 						<input type="button" onClick='yelp.applyFilter(); return false;' value='Filter'>
+						
 						<br/>
 						Coupons? <input type="checkbox" id="dealFilter" name="dealFilter" value="deal" onClick="yelp.reload()"/> 
 						
@@ -57,7 +65,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<div id='navBar'><a  href='#' id='nav-less' onclick='yelp.loadPrev()'>Prev</a> &nbsp;<a href='#'  id='nav-more' onclick='yelp.loadNext()'>Next</a> </div>
+				<div id='navBar' style='nav-buttons'><a  href='#' id='nav-less' onclick='yelp.loadPrev()'>&lt;&lt;</a> &nbsp;<a href='#'  id='nav-more' onclick='yelp.loadNext()'>&gt;&gt;</a> </div>
 			</div>
 			
 		</div>
@@ -86,11 +94,27 @@
 												'#searchTerm',
 												1600,
 												'yelpDeals');
-			//yelp.yelpData.retailers.push( new YelpBusiness(1,"bus1","business a","www.mozilla.ca","www.mozilla.ca","img/yelpReview.jpg",2,36,121,["food","dinner"],[]));
-			//yelp.yelpData.retailers.push( new YelpBusiness(2,"bus2","business b","www.google.ca","www.mozilla.ca","img/yelpReview.jpg",3,37,121,["supper","dessert"],[]));
-			//yelp.yelpData.retailers.push( new YelpBusiness(3,"bus3","business c","www.yahoo.ca","www.mozilla.ca","img/yelpReview.jpg",4,36,120,["snack","breakfast"],[]));
 			yelp.searchYelp(0);
-
+			
+			checkWindowWidth();
+		};
+		
+		/*
+		* indicate if mobile
+		* ensure that 
+		*/
+		function checkWindowWidth()
+		{
+			if(yelp)
+			{
+					
+					if( $(window).height()<MOBILESCREENSIZE)
+					{
+						DISPLAYLIMIT = DISPLAYLIMITMOBILE;
+						MOBILE = true;
+						yelp.move("90%");
+					}
+			}
 		};
 		
 		

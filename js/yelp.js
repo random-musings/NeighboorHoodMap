@@ -341,6 +341,12 @@ Yelp.prototype.loadPrev = function ()
 }
 
 
+/*
+* @returns YelpBusiness
+* @param {marker} the google marker from the map
+*	@description 
+*		using the title of the marker find a business in yelpData and return it
+*/
 Yelp.prototype.findBusiness = function (marker)
 {
 	var title = marker.title;
@@ -355,3 +361,25 @@ Yelp.prototype.findBusiness = function (marker)
 	}
 	return null;
 };
+
+
+/*
+* @returns void
+* @param {leftPosition  the css position to move the searchBar to
+*	@description 
+*		loads the previous LIMIT(10) results into the knockout observable array
+*/
+Yelp.prototype.move = function(leftPosition)
+{
+	$("#searchBar").css('left',leftPosition);
+		$("#btnMoveLeft").hide();
+		$("#btnMoveRight").hide();
+
+	if(leftPosition===('0%'))
+	{
+		$("#btnMoveRight").show();
+	}else
+	{
+		$("#btnMoveLeft").show();
+	}
+}
