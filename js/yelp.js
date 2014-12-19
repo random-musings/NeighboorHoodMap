@@ -392,3 +392,34 @@ Yelp.prototype.moveRight = function()
 };
 
 
+
+
+/*
+* @returns void
+*	@description 
+* resets the current map marker icon to red
+* sets the selectedMarker to yellow
+*/
+Yelp.prototype.resetMarkers = function( )
+{
+	var ix;
+	var allMarkerIx;
+
+	for( ix in  this.map.mapMarkers)
+	{
+		 
+		 	for(allMarkerIx in this.yelpData.markers)
+			{
+			var currMarker = this.map.mapMarkers[ix];
+			var yelpMarker =  this.yelpData.markers[allMarkerIx];
+			if(yelpMarker && currMarker)
+			{
+				if(yelpMarker.name === currMarker.title)
+				{
+					currMarker.setIcon ( yelpMarker.icon);
+				}
+			}
+		}
+	}
+	
+}

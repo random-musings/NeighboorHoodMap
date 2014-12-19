@@ -5,6 +5,7 @@ var YelpBusiness = function(
 									businessId,
 									businessName,
 									businessUrl,
+									businessImage,
 									businessAddress,
 									mobileUrl,
 									ratingsImg,
@@ -20,6 +21,7 @@ var YelpBusiness = function(
 	this.businessId = businessId;
 	this.businessIx = businessIx;
 	this.businessUrl = businessUrl;
+	this.imageUri = businessImage;
 	this.ratingsImg = ratingsImg;
 	this.reviewCount = reviewCount;
 	this.mobileUrl = mobileUrl;

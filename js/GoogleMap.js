@@ -11,8 +11,9 @@ var infoWindowContent = '<div id="content" class="infoWindowPano" style="width:2
 var infoWindowContentMobile = '<div id="content" class="infoWindowPano" style="width:175px;height:250px;"></div><div id="details" style="	background-color:white;	font-size:1em;	width:181px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 
 var infoWindowDetails =		' NAME<br/>'+
-																					'  ADDRESS <br/> '+
-																					'  <a href="REVIEWURL" target="_new">REVIEW reviews</a>';
+											'  ADDRESS <br/> '+
+											'  <a href="REVIEWURL" target="_new">REVIEW reviews</a>'+
+											'<img src="IMAGE" width="100%" height="80%"/> ';
 
 //will be set in neighborhoodview load
 var infoWindow;//new google.maps.InfoWindow({content:infoWindowContent});
@@ -102,55 +103,35 @@ GoogleMap.prototype.addMarker = function(pLocation,pIcon,pTitle)
     //create the information window
     google.maps.event.addListener(marker, 'click', function() {
     
-		
-			
-			infoWindow.open(yelp.map.map,marker);
-			var business = yelp.findBusiness (marker);
-			var details = "";
-			
-			//add screen shot
-			var pano = null;
-			google.maps.event.addListener(infoWindow, 'domready', function () {
-					if (pano != null) {
-							pano.unbind("position");
-							pano.setVisible(false);
-					}
-					pano = new google.maps.StreetViewPanorama(document.getElementById("content"), {
-							navigationControl: true,
-							navigationControlOptions: { style: google.maps.NavigationControlStyle.ANDROID },
-							enableCloseButton: false,
-							addressControl: false,
-							linksControl: false
-					});
-					pano.bindTo("position", marker);
-					pano.setVisible(true);
-					
-					
-					if(business!=null)
-				{
-					details = document.createElement("div");
-					details.innerHTML = infoWindowDetails.replace('NAME',business.name)
-						 .replace('ADDRESS', business.address)
-						 .replace('REVIEWURL',business.businessUrl)
-						 .replace('REVIEW', business.reviewCount);
+		infoWindow.open(yelp.map.map,marker);
+		var business = yelp.findBusiness (marker);
+		var details = "";
+		yelp.resetMarkers();
+		marker.setIcon (GOOGLEYELLOWICON);
+	
+		google.maps.event.addListener(infoWindow, 'domready', function () {
+			//SELECTEDMARKER = marker.title;
+			//yelp.setSelectedMarker(marker);
 				
-				}
-				$("#details").empty();
-				document.getElementById("details").appendChild( details);
-				
-				// change SELECTED marker to blue
-				this.setSelectedMarker(marker);
+				if(business!=null)
+			{
+				details = document.createElement("div");
+				details.innerHTML = infoWindowDetails.replace('NAME',business.name)
+					 .replace('ADDRESS', business.address)
+					 .replace('REVIEWURL',business.businessUrl)
+					 .replace('REVIEW', business.reviewCount)
+					 .replace('IMAGE',business.imageUri);
 			
-			});					
+			}
+			$("#details").empty();
+			document.getElementById("details").appendChild( details);
+			
+		});					
     });
 		
 	this.mapMarkers.push(marker);
 };
 
-
-
-
-		
 
 		
 /*
@@ -200,34 +181,3 @@ GoogleMap.prototype.deleteMarkers = function() {
   this.mapMarkers = [];
 };
 
-
-/*
-* @returns void
-*	@description 
-* resets the current map marker icon to red
-* sets the selectedMarker to yellow
-*/
-GoogleMap.prototype.setSelectedMarker(yelpMarkers, selectedMarker)
-{
-	var ix;
-	var allMarkerIx;
-	for(ix in this.mapMarkers)
-	{
-		 //find marker in all marker and reset icon
-		 var currMarker = this.mapMapMarkers[ix];
-		 for(allMarkerIx in yelpMarkers)
-		 {
-			var yelpMarker = yelpMarkers[allMarkerIx];
-			if(yelpMarker.name === currMarker.title)
-			{
-				currMarker.icon = yelpMarker.icon;
-			}
-			
-			if(currMarker.title === selectedMarker.title)
-			{
-				currMarker.icon = GOOGLEYELLOWICON;
-			}
-		 }
-	}
-		
-}

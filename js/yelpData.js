@@ -51,6 +51,7 @@ YelpData.prototype.loadYelpData = function (yelpResponseData, append)
 										business.id,
 										business.name,
 										business.url,
+										business.image_url,
 										this.formatAddress(business),
 										business.mobile_url,
 										business.rating_img_url_small,
