@@ -10,10 +10,11 @@
 var infoWindowContent = '<div id="content" class="infoWindowPano" style="width:250px;height:350px;"></div><div id="details" style="	background-color:white;	font-size:1.3em;	width:270px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 var infoWindowContentMobile = '<div id="content" class="infoWindowPano" style="width:175px;height:250px;"></div><div id="details" style="	background-color:white;	font-size:1em;	width:181px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 
-var infoWindowDetails =		' NAME<br/>'+
+var infoWindowDetails =		''+
+											' NAME<br/>'+
 											'  ADDRESS <br/> '+
-											'  <a href="REVIEWURL" target="_new">REVIEW reviews</a>'+
-											'<img src="IMAGE" width="100%" height="80%"/> ';
+											' <a href="REVIEWURL" target="_new">REVIEW reviews</a><br/>'+
+											'<center><img src="IMAGE" style="left:0:top:0;height:145px" /></center> ';
 
 //will be set in neighborhoodview load
 var infoWindow;//new google.maps.InfoWindow({content:infoWindowContent});

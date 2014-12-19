@@ -36,7 +36,7 @@
 				</div>
 				<div class="list-background">
 					<div>
-					<form id="form-container" >
+					<form id="form-container" onsubmit="return false">
 							Filter: &nbsp;<input type="text" id="searchTerm" name="searchTerm" value='' oninput="yelp.filterResults()"/> 
 							<br/>
 							Coupons? <input type="checkbox" id="dealFilter" name="dealFilter" value="deal" onClick="yelp.reload()"/> 

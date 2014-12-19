@@ -37,6 +37,7 @@ var MOBILEWIDTH= 400;
 var LISTRIGHTPCT = "80%";
 var LISTRIGHTPCTMOBILE = "90%";
 var LISTLEFTPCT = "0%";
+var YELPSEARCHTERM ="food";
 var YELPPARAMATERS  = 
 						"callback="+CALLBACK+ //this is a jsonp callback parameter
 						"&category_filter="+CATEGORYFILTER+

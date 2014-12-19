@@ -83,7 +83,7 @@ Yelp.prototype.fillYelpData = function(data)
 */
 Yelp.prototype.getYelpParams = function(offset)
 {
-	return YELPPARAMATERS.replace(SEARCHTERM,"food")
+	return YELPPARAMATERS.replace(SEARCHTERM,YELPSEARCHTERM)
 								.replace(CALLBACK,this.callBack)
 								.replace(RADIUSFILTER,this.radius)
 								.replace(OFFSET,offset);
@@ -98,8 +98,9 @@ Yelp.prototype.getYelpParams = function(offset)
 *    if the previous search returned less than LIMIT(20) businesses
 */
 Yelp.prototype.loadMoreBusinesses = function(lastSearchResultCount)
-{
-
+{	
+	
+			
 		//check to see if we received less businesses than LIMIT (20) cause the  search has returned all businesses that matched
 		//or check to see if we already have more than MAXRESULTS(100) businesses that were found
 		if(lastSearchResultCount< LIMIT || this.yelpData.offset >MAXRESULTS)
@@ -136,7 +137,7 @@ Yelp.prototype.loadResultsView = function(offset )
 	while (ix<DISPLAYLIMIT && actualIndex < this.yelpData.businesses.length)
 	{
 		var business = this.yelpData.businesses[actualIndex];
-		if( business && this.matchesFilter(business, this.filterText))
+		if( business && business.matchesFilter( this.filterText,$("#dealFilter").is(':checked')))
 		{
 			//fill the list view
 			this.resultsView.addRetailer(business);
@@ -222,54 +223,6 @@ Yelp.prototype.errorInAjax = function(xhr, status, errorThrown)
 };
 
 
-/*
-* @returns false/true
-* @param {business}  the business we will decide to filter
-*	@description 
-*		indicates if business meets the filter
-*/
-Yelp.prototype.matchesFilter = function(business,filterText)
-{
-		filterText = filterText.toUpperCase();
-		
-		if($("#dealFilter").is(':checked'))
-		{
-			return (business.deals.length>0);
-		}
-		
-				//if filterText==deal then match all those with deals
-		if(filterText.toUpperCase()==DEAL)
-		{
-			return  (business.deals.length>0);
-		}
-		
-		//only apply filters if we have 2 or more characters
-		if(!filterText || filterText.length<2)
-		{
-			return true;
-		}
-	
-		
-		//match on business name
-		if(business.name.toUpperCase().indexOf(filterText)>-1)
-		{
-			return true;
-		}
-		
-		//match on categories
-		var categoryIx = 0;
-		for(categoryIx in business.categories)
-		{
-			var category  = business.categories[categoryIx];
-			if(category && category.toUpperCase().indexOf(filterText)>-1)
-			{
-				return true;
-			}
-		}
-		
-		//no match made
-	return false;
-};
 
 
 Yelp.prototype.applyFilter = function()

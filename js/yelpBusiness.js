@@ -48,7 +48,7 @@ YelpBusiness.prototype.loadDeals = function (deals)
 			this.deals.push(yelpDeal);
 		}
 	}
-}
+};
 
 YelpBusiness.prototype.loadCategories = function (categories)
 {
@@ -63,6 +63,59 @@ YelpBusiness.prototype.loadCategories = function (categories)
 		}
 	}
 	
-}
+};
 
 
+/*
+* @returns false/true
+* @param {business}  the business we will decide to filter
+*	@description 
+*		indicates if business meets the filter
+*/
+YelpBusiness.prototype.matchesFilter = function( filterText, includeDeals)
+{
+		filterText = filterText.toUpperCase();
+		
+		if(includeDeals)
+		{
+			return (this.deals.length>0);
+		}
+		
+				//if filterText==deal then match all those with deals
+		if(filterText.toUpperCase()==DEAL)
+		{
+			return  (this.deals.length>0);
+		}
+		
+		//only apply filters if we have 2 or more characters
+		if(!filterText || filterText.length<2)
+		{
+			return true;
+		}
+	
+		//match on business name
+		if(this.name.toUpperCase().indexOf(filterText)>-1)
+		{
+			return true;
+		}
+		
+		//match on categories
+		var categoryIx = 0;
+		for(categoryIx in this.categories)
+		{
+			var category  = this.categories[categoryIx];
+			if(category && category.toUpperCase().indexOf(filterText)>-1)
+			{
+				return true;
+			}
+		}
+		
+		//mathc on address
+		if(this.address.toUpperCase().indexOf(filterText)>0)
+		{
+			return true;
+		}
+		
+		//no match made
+	return false;
+};
