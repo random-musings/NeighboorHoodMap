@@ -83,7 +83,7 @@ Yelp.prototype.fillYelpData = function(data)
 */
 Yelp.prototype.getYelpParams = function(offset)
 {
-	return YELPPARAMATERS.replace(SEARCHTERM,"show")
+	return YELPPARAMATERS.replace(SEARCHTERM,"food")
 								.replace(CALLBACK,this.callBack)
 								.replace(RADIUSFILTER,this.radius)
 								.replace(OFFSET,offset);
@@ -369,17 +369,26 @@ Yelp.prototype.findBusiness = function (marker)
 *	@description 
 *		loads the previous LIMIT(10) results into the knockout observable array
 */
-Yelp.prototype.move = function(leftPosition)
+Yelp.prototype.moveLeft = function()
 {
-	$("#searchBar").css('left',leftPosition);
-		$("#btnMoveLeft").hide();
-		$("#btnMoveRight").hide();
+	$("#searchBar").css('left',LISTLEFTPCT);
+	$("#btnMoveLeft").hide();
+	$("#btnMoveRight").show();
+};
 
-	if(leftPosition===('0%'))
-	{
-		$("#btnMoveRight").show();
-	}else
-	{
-		$("#btnMoveLeft").show();
-	}
-}
+
+
+/*
+* @returns void
+* @param {leftPosition  the css position to move the searchBar to
+*	@description 
+*		loads the previous LIMIT(10) results into the knockout observable array
+*/
+Yelp.prototype.moveRight = function()
+{
+	$("#searchBar").css('left',LISTRIGHTPCT);
+	$("#btnMoveLeft").show();
+	$("#btnMoveRight").hide();
+};
+
+

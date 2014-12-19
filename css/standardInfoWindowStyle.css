@@ -1,0 +1,27 @@
+.infoWindowStyle
+{
+	background-color:white;
+	font-size:1em;
+	width:181px;
+	top:-8px;
+	left:-5px;
+	position:absolute;
+	z-index:999;
+}
+
+.infoWindowPano
+{
+	width:250px;
+	height:350px;
+}
+
+.detailsStyle
+{
+	background-color:white;	
+	font-size:1.3em;	
+	width:270px;	
+	top:-8px;	
+	left:-5px;	
+	position:absolute;	
+	z-index:999;
+}

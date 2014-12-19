@@ -9,12 +9,14 @@ var PINGREEN = "00AA00";
 var PINCHAR = "<PINCHAR>";
 var PINCOLOR = "<PINCOLOR>";
 var GOOGLEPIN = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+PINCHAR+"|"+PINCOLOR;
+var GOOGLEYELLOWICON = "http://google.com/mapfiles/ms/micons/yellow-dot.png";
 var YELPDEALICON = "http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|00FF00";
 var YELPURI = "http://api.yelp.com/v2/search";
 var HTTPMETHOD = "GET";
 var RADIUSFILTER = "<RADIUSFILTER>";
 var SEARCHTERM = "<SEARCHTERM>";
 var TIMESTAMP = "<TIMESTAMP>";
+var STYLETAG = "<CSS>";
 var LIMIT = 20; //yelp limits on max businesses to pull at one time
 var MAXRESULTS = 1000; //the number of businesses to pull
 var LATITUDE = 36.135645;
@@ -30,7 +32,11 @@ var OAUTHTOKENSECRET = "Vbxnk7Wr1kZI1Px7KwWhNCqatwg";
 var OAUTHNONCE = "<NONCE>";
 var OAUTHVERSION = "1.0";
 var MOBILE = false;
-var MOBILESCREENSIZE = 500;
+var MOBILEHEIGHT= 800;
+var MOBILEWIDTH= 400;
+var LISTRIGHTPCT = "80%";
+var LISTRIGHTPCTMOBILE = "90%";
+var LISTLEFTPCT = "0%";
 var YELPPARAMATERS  = 
 						"callback="+CALLBACK+ //this is a jsonp callback parameter
 						"&category_filter="+CATEGORYFILTER+
@@ -43,3 +49,62 @@ var YELPPARAMATERS  =
 						"&sort=2"
 						;
 var ZOOM =  14;
+
+
+
+var STDSTYLE = ".infoWindowStyle"+
+			"{"+
+			"	background-color:white;"+
+			"	font-size:1em;"+
+			"	width:181px;"+
+			"	top:-8px;"+
+			"	left:-5px;"+
+			"	position:absolute;"+
+			"	z-index:999;"+
+			"}"+
+			""+
+			".infoWindowPano"+
+			"{"+
+			"	width:250px;"+
+			"	height:350px;"+
+			"}"+
+			""+
+			".detailsStyle"+
+			"{"+
+			"	background-color:white;	"+
+			"	font-size:1.3em;	"+
+			"	width:270px;	"+
+			"	top:-8px;	"+
+			"	left:-5px;	"+
+			"	position:absolute;	"+
+			"	z-index:999;"+
+			"}";
+
+
+var MOBILESTYLE = ".infoWindowStyle"+
+			"{"+
+			"	background-color:white;"+
+			"	font-size:1em;"+
+			"	width:181px;"+
+			"	top:-8px;"+
+			"	left:-5px;"+
+			"	position:absolute;"+
+			"	z-index:999;"+
+			"}"+
+			""+
+			".infoWindowPano"+
+			"{"+
+			"	width:175px;"+
+			"	height:250px;"+
+			"}"+
+			""+
+			".detailsStyle"+
+			"{"+
+			"	background-color:white;	"+
+			"	font-size:1em;	"+
+			"	width:181px;	"+
+			"	top:-8px;	"+
+			"	left:-5px;	"+
+			"	position:absolute;	"+
+			"	z-index:999;"+
+			"}";

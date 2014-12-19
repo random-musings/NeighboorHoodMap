@@ -27,47 +27,51 @@
   <body>
    
     <div id="map-canvas"></div>
-		<div id="searchBar" class="floating">
-			<div>
-				<form>
-					<input type="button"  value="&#8592;" id='btnMoveLeft' onClick='yelp.move("0%");return false;'>
-					<input type="button" value="&#8594;" id='btnMoveRight' onClick='yelp.move("80%");return false;'>
-				</form>
+			<div id="searchBar" class="floating">
+				<div class="navButtons">
+					<form>
+						<input type="button"  value="&#8592;" id='btnMoveLeft' onClick='yelp.moveLeft();return false;'>
+						<input type="button" value="&#8594;" id='btnMoveRight' onClick='yelp.moveRight();return false;'>
+					</form>
+				</div>
+				<div class="list-background">
+					<div>
+					<form id="form-container" >
+							Filter: &nbsp;<input type="text" id="searchTerm" name="searchTerm" value='' oninput="yelp.filterResults()"/> 
+							<br/>
+							Coupons? <input type="checkbox" id="dealFilter" name="dealFilter" value="deal" onClick="yelp.reload()"/> 
+					</form>
+					</div>
+				
+					<div id="yelpDeals" class="business-list">
+						<table>
+							<thead>
+							</thead>
+							<tbody id="tableBindings" data-bind="foreach: yelp.resultsView.retailers">
+								<tr>
+									<td data-bind="text: businessIx"></td>
+									<td> <a data-bind="attr: {href: businessUrl}" target="_new"><span class="yelpBusiness" data-bind="text: name"></span></a></td>
+									<td> <img data-bind="attr: {src: ratingsImg}"></span></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td colspan="2"> 
+										<span data-bind="foreach: categories">
+											<span data-bind="text: $data"></span>
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="align-middle">
+								<div id='navBar' style='nav-buttons'>
+									<a  href='#' id='nav-less' onclick='yelp.loadPrev()'>&lt;&lt;</a> &nbsp; 
+									<a href='#'  id='nav-more' onclick='yelp.loadNext()'>&gt;&gt;</a> 
+								</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="business-list">
-				<form id="form-container" class="form-container1" >
-						
-						<input type="text" id="searchTerm" name="searchTerm" value='' oninput="yelp.filterResults()"/> 
-						<input type="button" onClick='yelp.applyFilter(); return false;' value='Filter'>
-						
-						<br/>
-						Coupons? <input type="checkbox" id="dealFilter" name="dealFilter" value="deal" onClick="yelp.reload()"/> 
-						
-				</form>
-			</div>
-			<div id="yelpDeals" class="business-list">
-				<table>
-					<thead>
-					</thead>
-					<tbody id="tableBindings" data-bind="foreach: yelp.resultsView.retailers">
-						<tr>
-							<td data-bind="text: businessIx"></td>
-							<td> <a data-bind="attr: {href: businessUrl}" target="_new"><span class="yelpBusiness" data-bind="text: name"></span></a></td>
-							<td> <img data-bind="attr: {src: ratingsImg}"></span></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td colspan="2"> 
-								<span data-bind="foreach: categories">
-									<span data-bind="text: $data"></span>
-								</span>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<div id='navBar' style='nav-buttons'><a  href='#' id='nav-less' onclick='yelp.loadPrev()'>&lt;&lt;</a> &nbsp;<a href='#'  id='nav-more' onclick='yelp.loadNext()'>&gt;&gt;</a> </div>
-			</div>
-			
 		</div>
 		
 		<!--google map scripts-->
@@ -105,20 +109,23 @@
 		*/
 		function checkWindowWidth()
 		{
-			if(yelp)
-			{
-					
-					if( $(window).height()<MOBILESCREENSIZE)
+				if(yelp)
+				{				
+					yelp.moveRight();
+				}
+				if( $(window).height()>MOBILEHEIGHT  && $(window).width()>MOBILEWIDTH)
 					{
-						DISPLAYLIMIT = DISPLAYLIMITMOBILE;
-						MOBILE = true;
-						yelp.move("90%");
+						infoWindow = new google.maps.InfoWindow({content:infoWindowContent});
+					}else
+					{	
+						infoWindow = new google.maps.InfoWindow({content:infoWindowContentMobile});
 					}
-			}
+				if($(window).width()<=MOBILEWIDTH ||$(window).width()<=MOBILEHEIGHT)
+				{
+					LISTRIGHTPCT = LISTRIGHTPCTMOBILE;
+					DISPLAYLIMIT = DISPLAYLIMITMOBILE;
+				}
 		};
-		
-		
-
 		
 			google.maps.event.addDomListener(window, 'load', initialize);
 		</script>

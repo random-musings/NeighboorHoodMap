@@ -28,10 +28,33 @@ html, body, #map-canvas {
 {
 	min-width:100px;
 	background-color: #ffffff;
+	display:inline-block;
 }
 
 .nev-buttons
 {
 	align:center;
 	width:
+}
+
+
+
+.moveList
+{
+	display: inline-block;
+	height: 100%;
+}
+
+.list-background{
+	background-color:white;
+}
+
+.navButtons
+{
+	display:inline;
+	align:top;
+}
+
+.align-middle{
+	align:middle;
 }
