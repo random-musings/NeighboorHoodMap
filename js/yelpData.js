@@ -84,12 +84,12 @@ YelpData.prototype.loadYelpData = function (yelpResponseData, append)
 *	@description 
 *	create a colored pin icon - red is normal pin markers
 *  green indicates a deal is available
-*/
+*/ 
 YelpData.prototype.getPinIcon = function(business)
 {
-	var color = (business.deals.length>0)?PINGREEN:PINRED;
-	return GOOGLEPIN.replace(PINCHAR,business.businessIx)
-									.replace(PINCOLOR,color);
+	var color = (business.deals.length >1)?PINGREEN:PINRED;
+	return GOOGLEPIN.replace(PINCHAR, business.businessIx)
+									.replace(PINCOLOR, color);
 };
 
 

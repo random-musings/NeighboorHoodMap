@@ -8,36 +8,35 @@ html, body, #map-canvas {
       }
 	  
  #panel {
-        position: absolute;
-        top: 5px;
+        background-color: #fff;
+        border: 1px solid #999;
         left: 50%;
         margin-left: -180px;
-        z-index: 5;
-        background-color: #fff;
         padding: 5px;
-        border: 1px solid #999;
+        position: absolute;
+        top: 5px;
+        z-index: 5;
       }
 
 .floating{
+	left: 0%;
 	position:fixed;
 	top: 30px;
-	left: 0%;
 	z-index: 999;
 }
 
 .business-list
 {
-	min-width:100px;
 	background-color: #ffffff;
 	display:inline-block;
+	min-width:100px;
 }
 
 .nev-buttons
 {
 	align:center;
-	width:
+	width:100%;
 }
-
 
 
 .moveList
@@ -52,10 +51,15 @@ html, body, #map-canvas {
 
 .navButtons
 {
+	align:center;
 	display:inline;
-	align:top;
+	vertical-align:top;
+	
+	
 }
 
 .align-middle{
 	align:middle;
+	display:inline-block;
+	width:100%;
 }

@@ -69,7 +69,7 @@ Yelp.prototype.fillYelpData = function(data)
 {
 	console.log("IN PARSE YELP");
 	console.log(data);
-	this.yelpData.loadYelpData(data,true);
+	this.yelpData.loadYelpData(data, true);
 	
 	//search yelp again (if we can expect to get more results)
 	this.loadMoreBusinesses(data.businesses.length);
@@ -83,10 +83,10 @@ Yelp.prototype.fillYelpData = function(data)
 */
 Yelp.prototype.getYelpParams = function(offset)
 {
-	return YELPPARAMATERS.replace(SEARCHTERM,YELPSEARCHTERM)
-								.replace(CALLBACK,this.callBack)
-								.replace(RADIUSFILTER,this.radius)
-								.replace(OFFSET,offset);
+	return YELPPARAMETERS.replace(SEARCHTERM,YELPSEARCHTERM)
+								.replace(CALLBACK, this.callBack)
+								.replace(RADIUSFILTER, this.radius)
+								.replace(OFFSET, offset);
 };
 
 
@@ -203,7 +203,7 @@ Yelp.prototype.searchYelp = function(offset)
 		
 
 		//replace GET& with GET\u0026 cause yelp fails if we leave it in
-		signatureBaseString = signatureBaseString.replace("GET&","GET\\u0026");
+		signatureBaseString = signatureBaseString.replace("GET&", "GET\\u0026");
 		
 		//what we will send
 		var yelpHttp = YELPURI;
@@ -219,7 +219,7 @@ Yelp.prototype.searchYelp = function(offset)
 				cache: true, //very very important disables the _=[timestamp] at the end of the request
 				success: function(data){this.fillYelpData(data);},
 				jsonpCallback: this.callBack,
-				error: function (xhr, status, errorThrown) { yelp.errorInAjax(xhr,status,errorThrown);}
+				error: function (xhr, status, errorThrown) { yelp.errorInAjax(xhr, status, errorThrown);}
 			});
 		return false;
 };
@@ -332,7 +332,7 @@ Yelp.prototype.findBusiness = function (marker)
 */
 Yelp.prototype.moveLeft = function()
 {
-	$("#searchBar").css('left',LISTLEFTPCT);
+	$("#searchBar").css('left', LISTLEFTPCT);
 	$("#btnMoveLeft").hide();
 	$("#btnMoveRight").show();
 };
@@ -347,7 +347,7 @@ Yelp.prototype.moveLeft = function()
 */
 Yelp.prototype.moveRight = function()
 {
-	$("#searchBar").css('left',LISTRIGHTPCT);
+	$("#searchBar").css('left', LISTRIGHTPCT);
 	$("#btnMoveLeft").show();
 	$("#btnMoveRight").hide();
 };

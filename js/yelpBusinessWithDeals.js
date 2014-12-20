@@ -1,3 +1,6 @@
+
+
+
 var YelpBusinessDeals = [
  new YelpBusiness(
 				1,
@@ -12,7 +15,7 @@ var YelpBusinessDeals = [
 				37.7861099,
 					-122.4169922,
 				 ["Pizza"],
-				  ["Deals","deals"])
+				  [new YelpDeal("$88 for $100","http://www.yelp.com/deals/royalty-pizza-san-francisco-2") ])
 				  ,
 	new YelpBusiness(
 				2,
@@ -23,11 +26,11 @@ var YelpBusinessDeals = [
 				"1000 Van Ness Ave<br/> 3rd Fl<br/>  San Francisco US  94109  ",
 				"http://m.yelp.com/biz/greenlid-studiomix-san-francisco",
 				"http://s3-media1.fl.yelpcdn.com/assets/2/www/img/c7623205d5cd/ico/stars/v1/stars_small_5.png",
-				1,
+				2,
 				37.7847999335966,
 				-122.421518351868,
-				["Juice Bars & Smoothies","Coffee & Tea","Salad"],
-				["Deals","deals"])
+				["Juice Bars & Smoothies", "Coffee & Tea", "Salad"],
+				[  new YelpDeal("$15 for $30", "http://www.yelp.com/deals/greenlid-studiomix-san-francisco")])
 				
 ];
 

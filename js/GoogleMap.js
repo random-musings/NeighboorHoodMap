@@ -15,6 +15,7 @@ var infoWindowDetails =		''+
 											' NAME<br/>'+
 											'  ADDRESS <br/> '+
 											' <a href="REVIEWURL" target="_new">REVIEW reviews</a><br/>'+
+											'DEALS'+
 											'<center><img src="IMAGE" style="left:0:top:0;height:145px" /></center> ';
 
 //will be set in neighborhoodview load
@@ -26,7 +27,7 @@ var infoWindow;
 * @param {mapCanvasId}  id of the html div  that will show the map
 * @param {initialLocation} GPS coordinates of the map we will show
 */
-var GoogleMap = function(mapCanvasId,initialLocation)
+var GoogleMap = function(mapCanvasId, initialLocation)
 {
 	this.mapId = mapCanvasId;
 	this.mapLocation = initialLocation;
@@ -92,7 +93,7 @@ GoogleMap.prototype.toggleStreetView = function()
 *		adds a marker to the map
 *   code Credit: https://developers.google.com/maps/documentation/javascript/examples/marker-remove
 */
-GoogleMap.prototype.addMarker = function(pLocation,pIcon,pTitle)
+GoogleMap.prototype.addMarker = function(pLocation, pIcon, pTitle)
 {
 	console.log("in add marker "+pIcon+" "+pTitle);
 	var marker = new google.maps.Marker({
@@ -118,11 +119,12 @@ GoogleMap.prototype.addMarker = function(pLocation,pIcon,pTitle)
 				if(business !== null)
 			{
 				details = document.createElement("div");
-				details.innerHTML = infoWindowDetails.replace('NAME',business.name)
+				details.innerHTML = infoWindowDetails.replace('NAME', business.name)
 					 .replace('ADDRESS', business.address)
-					 .replace('REVIEWURL',business.businessUrl)
+					 .replace('REVIEWURL', business.businessUrl)
 					 .replace('REVIEW', business.reviewCount)
-					 .replace('IMAGE',business.imageUri);
+					 .replace('IMAGE', business.imageUri)
+					 .replace('DEALS',business.deals);
 			
 			}
 			$("#details").empty();

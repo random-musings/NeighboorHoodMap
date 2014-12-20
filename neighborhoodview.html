@@ -4,27 +4,27 @@
 <html>
   <head>
     <meta charset="utf-8">
-		<meta http-equiv="Cache-control" content="no-cache"> 
-		<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width"/>
     <title>San Francisco</title>
     <link rel="stylesheet"  href="css/style.css"/>
 		
 		<!--knockout scripts-->
-		<script type="text/javascript" src="js/libs/knockout-3.2.0.js" ></script>
-		<script type="text/javascript" src="js/libs/knockout.simpleGrid.3.0.js" ></script>
+		<script type="text/javascript" src="js/libs/knockout-3.2.0.js"  async></script>
+		<script type="text/javascript" src="js/libs/knockout.simpleGrid.3.0.js" async></script>
 		
 		<!--yelp scripts-->
-		<script type="text/javascript" src="js/libs/sha1.js" ></script>
-		<script type="text/javascript" src="js/libs/oauth.js" ></script>
-		<script type="text/javascript" src="js/libs/jquery.min.js" ></script>
+		<script type="text/javascript" src="js/libs/sha1.js" async></script>
+		<script type="text/javascript" src="js/libs/oauth.js" async></script>
+		<script type="text/javascript" src="js/libs/jquery.min.js" async ></script>
 		
-		<script type="text/javascript" src="js/yelpConstants.js" ></script>	
-		<script type="text/javascript" src="js/yelpMarker.js" ></script>	
-		<script type="text/javascript" src="js/yelpResultsView.js" ></script>	
-		<script type="text/javascript" src="js/yelpBusiness.js" ></script>	
-		<script type="text/javascript" src="js/yelpData.js" ></script>	
-		<script type="text/javascript" src="js/yelpBusinessWithDeals.js" ></script>	
-		<script type="text/javascript" src="js/yelp.js" ></script>	
+		<script type="text/javascript" src="js/yelpConstants.js" async ></script>	
+		<script type="text/javascript" src="js/yelpMarker.js" async></script>	
+		<script type="text/javascript" src="js/yelpResultsView.js" async></script>	
+		<script type="text/javascript" src="js/yelpBusiness.js" async></script>	
+		<script type="text/javascript" src="js/yelpData.js" async></script>	
+		<script type="text/javascript" src="js/yelpDeal.js" async></script>	
+		<script type="text/javascript" src="js/yelpBusinessWithDeals.js" async></script>	
+		<script type="text/javascript" src="js/yelp.js" async></script>	
   </head>
   <body>
    
@@ -52,8 +52,8 @@
 							<tbody id="tableBindings" data-bind="foreach: yelp.resultsView.retailers">
 								<tr>
 									<td data-bind="text: businessIx"></td>
-									<td> <a data-bind="attr: {href: businessUrl}" target="_new"><span class="yelpBusiness" data-bind="text: name"></span></a></td>
-									<td> <img data-bind="attr: {src: ratingsImg}"></span></td>
+									<td> <a data-bind="attr: {href: businessUrl}" target="_blank"><span class="yelpBusiness" data-bind="text: name"></span></a></td>
+									<td> <img data-bind="attr: {src: ratingsImg}" alt="yelp rating"/></td>
 								</tr>
 								<tr>
 									<td></td>
@@ -67,14 +67,18 @@
 						</table>
 						<div class="align-middle">
 								<div id='navBar' style='nav-buttons'>
-									<a  href='#' id='nav-less' onclick='yelp.loadPrev()'>&lt;&lt;</a> &nbsp; 
-									<a href='#'  id='nav-more' onclick='yelp.loadNext()'>&gt;&gt;</a> 
+									&nbsp; 
+									&nbsp; 
+									<a  href='#' id='nav-less' onclick='yelp.loadPrev()'>&lt;&lt; Previous</a> 
+									&nbsp; 
+									&nbsp; 
+									<a href='#'  id='nav-more' onclick='yelp.loadNext()'>Next &gt;&gt;</a> 
 								</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+	
 		
 		<!--google map scripts-->
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -115,10 +119,7 @@
 		*/
 		function checkWindowWidth()
 		{
-				if(yelp)
-				{				
-					yelp.moveRight();
-				}
+
 				if( $(window).height()>MOBILEHEIGHT  && $(window).width()>MOBILEWIDTH)
 					{
 						infoWindow = new google.maps.InfoWindow({content:infoWindowContent});
@@ -130,6 +131,10 @@
 				{
 					LISTRIGHTPCT = LISTRIGHTPCTMOBILE;
 					DISPLAYLIMIT = DISPLAYLIMITMOBILE;
+				}
+				if(yelp)
+				{				
+					yelp.moveRight();
 				}
 		}
 		

@@ -42,7 +42,7 @@ var LISTRIGHTPCTMOBILE = "90%";
 var LISTLEFTPCT = "0%";
 var YELPSEARCHTERM ="food";
 
-var YELPPARAMATERS  = 
+var YELPPARAMETERS  = 
 						"callback="+CALLBACK+ //this is a jsonp callback parameter
 						"&category_filter="+CATEGORYFILTER+
 						"&cli="+LATITUDE+","+LONGITUDE+

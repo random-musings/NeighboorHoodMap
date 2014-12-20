@@ -38,8 +38,8 @@ var YelpBusiness = function(
 	this.latitude = latitude;
 	this.longitude = longitude;
 	this.categories = [];
-	this.deals = [];
-	this.loadDeals(yelpDeals);
+	this.deals = this.formatDeals(yelpDeals);
+
 	this.loadCategories(yelpCategories);
 	this.reviewCount = reviewCount;
 	this.printDetails();
@@ -51,18 +51,20 @@ var YelpBusiness = function(
 * @description 
 *		loads deals into an array 
 */
-YelpBusiness.prototype.loadDeals = function (deals)
+YelpBusiness.prototype.formatDeals = function (deals)
 {
-	this.deals=[];
+	this.deals="";
 	var dealIx;
+	var dealHtml ="";
 	for (dealIx in deals)
 	{
 		var yelpDeal = deals[dealIx];
 		if(yelpDeal)
 		{
-			this.deals.push(yelpDeal);
+			dealHtml +="coupon: <a href='"+yelpDeal.dealUrl+"' target='_blank'>"+yelpDeal.name+"</a>  ";
 		}
 	}
+	return dealHtml;
 };
 
 
@@ -85,7 +87,6 @@ YelpBusiness.prototype.loadCategories = function (categories)
 			this.categories.push(category);
 		}
 	}
-	
 };
 
 
@@ -146,7 +147,11 @@ YelpBusiness.prototype.matchesFilter = function( filterText, includeDeals)
 };
 
 
-
+/*
+* @returns void
+*	@description 
+*		pritns out code - used for gathering business with deals - and creating the YelpBusinessWithDeals.js
+*/
 YelpBusiness.prototype.printDetails = function()
 {
 
@@ -162,7 +167,7 @@ YelpBusiness.prototype.printDetails = function()
 	console.log("\"latitude\":"+this.latitude+",");
 	console.log("\"longitude\":"+this.longitude+",");
 	console.log("\"categories\":\""+this.categories.join("\",\"")+"\",");
-	console.log("\"deals\":["+this.deals.join("\",\"")+"],");
+	console.log("\"deals\":["+this.deals+"],");
 	
 	console.log(" new YelpBusiness(");
 	console.log(" 							"+this.businessIx+",");
@@ -177,6 +182,6 @@ YelpBusiness.prototype.printDetails = function()
 	console.log("	"+this.latitude+",");
 	console.log("		"+this.longitude+",");
 	console.log("     ["+this.categories.join("\",\"")+"],");
-	console.log("	  ["+this.deals.join("\",\"")+"]);");
+	console.log("	  ["+this.deals+"]);");
 
 };
