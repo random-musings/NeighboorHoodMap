@@ -16,13 +16,10 @@ var PINCHAR = "<PINCHAR>";
 var PINCOLOR = "<PINCOLOR>";
 var GOOGLEPIN = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld="+PINCHAR+"|"+PINCOLOR;
 var GOOGLEYELLOWICON = "http://google.com/mapfiles/ms/micons/yellow-dot.png";
-var YELPDEALICON = "http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|00FF00";
 var YELPURI = "http://api.yelp.com/v2/search";
 var HTTPMETHOD = "GET";
 var RADIUSFILTER = "<RADIUSFILTER>";
 var SEARCHTERM = "<SEARCHTERM>";
-var TIMESTAMP = "<TIMESTAMP>";
-var STYLETAG = "<CSS>";
 var LIMIT = 20; //yelp limits on max businesses to pull at one time
 var MAXRESULTS = 100; //the number of businesses to pull (though yelp only seems to give us 40
 var LATITUDE = 37.786127;//36.135645;//
@@ -44,8 +41,7 @@ var LISTRIGHTPCT = "80%";
 var LISTRIGHTPCTMOBILE = "90%";
 var LISTLEFTPCT = "0%";
 var YELPSEARCHTERM ="food";
-var DEALSFILTERTRUE = "&deals_filter=true";
-var DEALSFILTERFALSE= "&deals_filter=false";
+
 var YELPPARAMATERS  = 
 						"callback="+CALLBACK+ //this is a jsonp callback parameter
 						"&category_filter="+CATEGORYFILTER+

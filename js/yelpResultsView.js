@@ -37,7 +37,7 @@ var YelpResultsView = function()
 	this.addRetailer = function(business)
 	{
 		this.retailers.push(business);
-	}
+	};
 
 /* 
 * @public
@@ -48,7 +48,7 @@ var YelpResultsView = function()
 	this.addMarker = function(marker)
 	{
 		this.markers.push(marker);
-	}
+	};
 
 /* 
 * @public
@@ -59,7 +59,7 @@ var YelpResultsView = function()
  this.clearRetailers = function()
  {
 			this.retailers.removeAll();
- }
+ };
  
 /* 
 * @public
@@ -70,6 +70,6 @@ var YelpResultsView = function()
  this.clearMarkers = function()
  {
 			this.markers.removeAll();
- }
+ };
  
 };

@@ -1,4 +1,10 @@
-
+/*
+* @class
+* This file handles the yelp Data
+* knockout is linked to the YelpData.businesses array
+* 
+* 
+*/
 
 var YelpData = function(yelpResponseData)
 {
@@ -34,6 +40,7 @@ YelpData.prototype.loadYelpData = function (yelpResponseData, append)
 	
 	var numResults  = yelpResponseData.businesses.length;
 	var busCount = this.businesses.length;
+	var businessIx;
 	for( businessIx in yelpResponseData.businesses)
 	{
 		var business = yelpResponseData.businesses[businessIx];
@@ -42,6 +49,7 @@ YelpData.prototype.loadYelpData = function (yelpResponseData, append)
 			busCount++;
 			business.ix = busCount; //record the order of the search results
 			var Categories = [];
+			var catIx;
 			for(catIx in business.categories)
 			{
 				Categories.push(business.categories[catIx][0]);
@@ -128,6 +136,6 @@ YelpData.prototype.formatAddress = function(business)
 	address +=business.location.country_code+'  ';
 	address +=business.location.postal_code+'  ';
 	return address;
-}
+};
 
 

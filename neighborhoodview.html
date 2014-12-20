@@ -6,7 +6,7 @@
     <meta charset="utf-8">
 		<meta http-equiv="Cache-control" content="no-cache"> 
 		<meta name="viewport" content="width=device-width">
-    <title>Santa Cruz Boardwalk</title>
+    <title>San Francisco</title>
     <link rel="stylesheet"  href="css/style.css"/>
 		
 		<!--knockout scripts-->
@@ -87,12 +87,15 @@
 		var yelpRetailers = {};
 	
 
-		
+		/*
+		* initialize the knockout list and all other businesses
+		*
+		*/
 		function initialize()
 		{
 			//set up the map
 			var santaCruzBoardwalk = new google.maps.LatLng(LATITUDE, LONGITUDE); //new google.maps.LatLng(36.9602286, -122.0199624);
-			gmap = new GoogleMap('map-canvas',santaCruzBoardwalk);
+			gmap = new GoogleMap('map-canvas', santaCruzBoardwalk);
 		
 			//set up Yelp
 			yelp = new Yelp(gmap,
@@ -103,11 +106,12 @@
 			yelp.loadBusinesses(0);
 			
 			checkWindowWidth();
-		};
+		}
 		
 		/*
-		* indicate if mobile
-		* ensure that 
+		* indicate if the screen is of mobile size
+		* ensure that it can hold 10 results vertically
+		* and it has enough width to keep the knocklout list in full view
 		*/
 		function checkWindowWidth()
 		{
@@ -127,7 +131,7 @@
 					LISTRIGHTPCT = LISTRIGHTPCTMOBILE;
 					DISPLAYLIMIT = DISPLAYLIMITMOBILE;
 				}
-		};
+		}
 		
 			google.maps.event.addDomListener(window, 'load', initialize);
 		</script>

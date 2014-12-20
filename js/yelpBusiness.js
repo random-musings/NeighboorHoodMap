@@ -54,6 +54,7 @@ var YelpBusiness = function(
 YelpBusiness.prototype.loadDeals = function (deals)
 {
 	this.deals=[];
+	var dealIx;
 	for (dealIx in deals)
 	{
 		var yelpDeal = deals[dealIx];
@@ -75,7 +76,7 @@ YelpBusiness.prototype.loadDeals = function (deals)
 YelpBusiness.prototype.loadCategories = function (categories)
 {
 	this.categories=[];
-	
+	var categoryIx;
 	for (categoryIx in categories)
 	{
 		var category = categories[categoryIx];
@@ -178,4 +179,4 @@ YelpBusiness.prototype.printDetails = function()
 	console.log("     ["+this.categories.join("\",\"")+"],");
 	console.log("	  ["+this.deals.join("\",\"")+"]);");
 
-}
+};

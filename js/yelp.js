@@ -100,18 +100,18 @@ Yelp.prototype.getYelpParams = function(offset)
 Yelp.prototype.loadMoreBusinesses = function(lastSearchResultCount)
 {	
 	
-		//check to see if we received less businesses than LIMIT (20) cause the  search has returned all businesses that matched
-		//or check to see if we already have more than MAXRESULTS(100) businesses that were found
-		if(lastSearchResultCount< LIMIT || this.offset >MAXRESULTS)
-		{
-			this.loadResultsView(this.currentViewWindow);
-			//we met our limit so load
-			ko.applyBindings(this.resultsView.retailers,document.getElementById(this.businessListElt));
-		}else
-		{
-			this.offset += LIMIT;
-			this.searchYelp(this.offset);
-		}
+	//check to see if we received less businesses than LIMIT (20) cause the  search has returned all businesses that matched
+	//or check to see if we already have more than MAXRESULTS(100) businesses that were found
+	if(lastSearchResultCount< LIMIT || this.offset >MAXRESULTS)
+	{
+		this.loadResultsView(this.currentViewWindow);
+		//we met our limit so load
+		ko.applyBindings(this.resultsView.retailers,document.getElementById(this.businessListElt));
+	}else
+	{
+		this.offset += LIMIT;
+		this.searchYelp(this.offset);
+	}
 }
 
 
@@ -168,10 +168,9 @@ Yelp.prototype.loadBusinesses = function(offset)
 		this.offset++;
 	}
 	
-	
 	//search yelp
 	this.searchYelp(offset);
-}
+};
 
 
 /*
@@ -253,7 +252,7 @@ Yelp.prototype.loadNext = function ()
 		this.currentViewWindow += DISPLAYLIMIT;
 	}
 	this.loadResultsView(this.currentViewWindow);
-}
+};
 
 
 /*
@@ -265,7 +264,7 @@ Yelp.prototype.loadNext = function ()
 Yelp.prototype.reload = function()
 {
 	this.loadResultsView(this.currentViewWindow);
-}
+};
 
 /*
 * @returns void
@@ -300,7 +299,7 @@ Yelp.prototype.loadPrev = function ()
 		this.currentViewWindow = 0;
 	}	
 	this.loadResultsView(this.currentViewWindow);
-}
+};
 
 
 /*
@@ -386,4 +385,4 @@ Yelp.prototype.resetMarkers = function( )
 		}
 	}
 	
-}
+};

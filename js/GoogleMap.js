@@ -51,9 +51,9 @@ GoogleMap.prototype.initMap = function()
 		center: this.mapLocation,
 		zoom:ZOOM,
 		streetViewControl: false
-	}
+	};
 	 this.map = new google.maps.Map(document.getElementById(this.mapId),
-      this.mapOptions);
+     this.mapOptions);
 };
 
 
@@ -83,7 +83,6 @@ GoogleMap.prototype.toggleStreetView = function()
 	this.mapOptions.center = this.mapLocation; //recenter the map
 	this.inPanorama = !this.panorama.getVisible();
 	this.panorama.setVisible(this.inPanorama);
-
 };
 
 
@@ -116,7 +115,7 @@ GoogleMap.prototype.addMarker = function(pLocation,pIcon,pTitle)
 	
 		google.maps.event.addListener(infoWindow, 'domready', function () {
 			
-				if(business!=null)
+				if(business !== null)
 			{
 				details = document.createElement("div");
 				details.innerHTML = infoWindowDetails.replace('NAME',business.name)

@@ -12,4 +12,4 @@ var YelpMarker  =  function(name, businessIx, latitude, longitude,icon)
 	this.latitude = latitude;
 	this.longitude = longitude;
 	this.icon = icon;
-}
+};
