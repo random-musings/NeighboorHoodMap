@@ -6,6 +6,7 @@ html, body, #map-canvas {
 				font-family:arial;
 				font-size: 1em;
       }
+	  
  #panel {
         position: absolute;
         top: 5px;

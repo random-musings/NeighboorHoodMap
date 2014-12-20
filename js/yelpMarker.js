@@ -1,3 +1,9 @@
+/*
+* @class
+* This file handles the marker data for each result returned 
+* this is called from YelpData when parsing results from yelp
+* 
+*/
 
 var YelpMarker  =  function(name, businessIx, latitude, longitude,icon)
 {

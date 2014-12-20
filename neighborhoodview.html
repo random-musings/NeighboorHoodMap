@@ -17,11 +17,13 @@
 		<script type="text/javascript" src="js/libs/sha1.js" ></script>
 		<script type="text/javascript" src="js/libs/oauth.js" ></script>
 		<script type="text/javascript" src="js/libs/jquery.min.js" ></script>
+		
 		<script type="text/javascript" src="js/yelpConstants.js" ></script>	
 		<script type="text/javascript" src="js/yelpMarker.js" ></script>	
 		<script type="text/javascript" src="js/yelpResultsView.js" ></script>	
 		<script type="text/javascript" src="js/yelpBusiness.js" ></script>	
 		<script type="text/javascript" src="js/yelpData.js" ></script>	
+		<script type="text/javascript" src="js/yelpBusinessWithDeals.js" ></script>	
 		<script type="text/javascript" src="js/yelp.js" ></script>	
   </head>
   <body>
@@ -39,7 +41,7 @@
 					<form id="form-container" onsubmit="return false">
 							Filter: &nbsp;<input type="text" id="searchTerm" name="searchTerm" value='' oninput="yelp.filterResults()"/> 
 							<br/>
-							Coupons? <input type="checkbox" id="dealFilter" name="dealFilter" value="deal" onClick="yelp.reload()"/> 
+							Coupons? <input type="checkbox" id="dealFilter" name="dealFilter" value="deal" onClick="yelp.filterResults()"/> 
 					</form>
 					</div>
 				
@@ -98,7 +100,7 @@
 												'#searchTerm',
 												1600,
 												'yelpDeals');
-			yelp.searchYelp(0);
+			yelp.loadBusinesses(0);
 			
 			checkWindowWidth();
 		};

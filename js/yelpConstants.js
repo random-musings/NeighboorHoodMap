@@ -1,3 +1,9 @@
+/*
+* this holds all of the constants used for this program
+*
+* 
+*/
+
 
 var CALLBACK = "<CALLBACK>";
 var CATEGORYFILTER = "";
@@ -18,10 +24,10 @@ var SEARCHTERM = "<SEARCHTERM>";
 var TIMESTAMP = "<TIMESTAMP>";
 var STYLETAG = "<CSS>";
 var LIMIT = 20; //yelp limits on max businesses to pull at one time
-var MAXRESULTS = 1000; //the number of businesses to pull
-var LATITUDE = 36.135645;
-var LONGITUDE = -115.161512;
-var LOCATION = "2901 Las Vegas Blvd S  Las Vegas, NV 89109";
+var MAXRESULTS = 100; //the number of businesses to pull (though yelp only seems to give us 40
+var LATITUDE = 37.786127;//36.135645;//
+var LONGITUDE =  -122.416984;//-115.161512; //
+var LOCATION =  "San Francisco, California USA"; //"2901 Las Vegas Blvd S  Las Vegas, NV 89109";//
 var OFFSET = "<OFFSET>";
 var OAUTHCONSUMERKEY = "Eqqi19ncmOaaRY8OlZMPog";
 var OAUTHTOKEN = "GkjmQjkZoVeNZyAPIAiCYMl6xctechN8";
@@ -38,6 +44,8 @@ var LISTRIGHTPCT = "80%";
 var LISTRIGHTPCTMOBILE = "90%";
 var LISTLEFTPCT = "0%";
 var YELPSEARCHTERM ="food";
+var DEALSFILTERTRUE = "&deals_filter=true";
+var DEALSFILTERFALSE= "&deals_filter=false";
 var YELPPARAMATERS  = 
 						"callback="+CALLBACK+ //this is a jsonp callback parameter
 						"&category_filter="+CATEGORYFILTER+
@@ -46,10 +54,10 @@ var YELPPARAMATERS  =
 						"&location="+LOCATION+
 						"&term="+SEARCHTERM+
 						"&radius_filter="+RADIUSFILTER+
-						"&offset="+OFFSET+
-						"&sort=2"
+						"&offset="+OFFSET
+						//+"&deals_filter=true"
+						//"&sort=1"
 						;
 var ZOOM =  14;
 
 
-var SELECTEDMARKER="";

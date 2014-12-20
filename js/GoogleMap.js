@@ -7,6 +7,7 @@
 *  https://maps.googleapis.com/maps/api/js?v=3.exp
 */
 
+//create content based on screen size
 var infoWindowContent = '<div id="content" class="infoWindowPano" style="width:250px;height:350px;"></div><div id="details" style="	background-color:white;	font-size:1.3em;	width:270px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 var infoWindowContentMobile = '<div id="content" class="infoWindowPano" style="width:175px;height:250px;"></div><div id="details" style="	background-color:white;	font-size:1em;	width:181px;	top:-8px;	left:-5px;	position:absolute;	z-index:999;" ></div>';
 
@@ -17,7 +18,7 @@ var infoWindowDetails =		''+
 											'<center><img src="IMAGE" style="left:0:top:0;height:145px" /></center> ';
 
 //will be set in neighborhoodview load
-var infoWindow;//new google.maps.InfoWindow({content:infoWindowContent});
+var infoWindow;
 
 /*
 * @public
@@ -80,8 +81,8 @@ GoogleMap.prototype.initPanorama = function()
 GoogleMap.prototype.toggleStreetView = function()
 {
 	this.mapOptions.center = this.mapLocation; //recenter the map
-  this.inPanorama = !this.panorama.getVisible();
-  this.panorama.setVisible(this.inPanorama);
+	this.inPanorama = !this.panorama.getVisible();
+	this.panorama.setVisible(this.inPanorama);
 
 };
 
@@ -107,13 +108,14 @@ GoogleMap.prototype.addMarker = function(pLocation,pIcon,pTitle)
 		infoWindow.open(yelp.map.map,marker);
 		var business = yelp.findBusiness (marker);
 		var details = "";
+		//change markers back to their original icons
 		yelp.resetMarkers();
+		
+		//set the clicked marker to have a yellow icon
 		marker.setIcon (GOOGLEYELLOWICON);
 	
 		google.maps.event.addListener(infoWindow, 'domready', function () {
-			//SELECTEDMARKER = marker.title;
-			//yelp.setSelectedMarker(marker);
-				
+			
 				if(business!=null)
 			{
 				details = document.createElement("div");
@@ -156,7 +158,7 @@ GoogleMap.prototype.setAllMap = function(map) {
 * call showMarkers to make them appear again
 */
 GoogleMap.prototype.clearMarkers = function() {
-  this.setAllMap(null);
+	this.setAllMap(null);
 };
 
 
@@ -168,7 +170,7 @@ GoogleMap.prototype.clearMarkers = function() {
 * call deleteMarkers to remove them from map and delete from memory
 */
 GoogleMap.prototype.showMarkers = function() {
-  this.setAllMap(this.map);
+	this.setAllMap(this.map);
 };
 
 /*

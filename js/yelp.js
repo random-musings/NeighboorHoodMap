@@ -100,10 +100,9 @@ Yelp.prototype.getYelpParams = function(offset)
 Yelp.prototype.loadMoreBusinesses = function(lastSearchResultCount)
 {	
 	
-			
 		//check to see if we received less businesses than LIMIT (20) cause the  search has returned all businesses that matched
 		//or check to see if we already have more than MAXRESULTS(100) businesses that were found
-		if(lastSearchResultCount< LIMIT || this.yelpData.offset >MAXRESULTS)
+		if(lastSearchResultCount< LIMIT || this.offset >MAXRESULTS)
 		{
 			this.loadResultsView(this.currentViewWindow);
 			//we met our limit so load
@@ -154,6 +153,24 @@ Yelp.prototype.loadResultsView = function(offset )
 		actualIndex++;
 	}
 	
+}
+
+/*
+ @description load the businesses  from Yelp as well as from the YelpBusinessWithDeals array
+*/
+Yelp.prototype.loadBusinesses = function(offset)
+{
+	//load businesses with deals
+	var ix;
+	for (	ix in YelpBusinessDeals)
+	{
+		this.yelpData.businesses.push(YelpBusinessDeals[ix]);
+		this.offset++;
+	}
+	
+	
+	//search yelp
+	this.searchYelp(offset);
 }
 
 
@@ -224,15 +241,6 @@ Yelp.prototype.errorInAjax = function(xhr, status, errorThrown)
 
 
 
-
-Yelp.prototype.applyFilter = function()
-{
-	this.filterText= $(this.searchTerm).val();
-	this.currentViewWindow = 0;
-	this.loadResultsView(this.currentViewWindow);
-};
-
-
 /*
 * @returns void
 *	@description 
@@ -267,6 +275,7 @@ Yelp.prototype.reload = function()
 */
 Yelp.prototype.filterResults = function ()
 {
+	this.currentViewWindow = 0;
 	if($(this.termId).val().length>=3 || $(this.termId).val().length===0 )
 	{
 		this.reload();
@@ -350,19 +359,21 @@ Yelp.prototype.moveRight = function()
 /*
 * @returns void
 *	@description 
-* resets the current map marker icon to red
-* sets the selectedMarker to yellow
+* this is called when a marker is clicked - all markers are set back to their original red marker 
+* 
 */
 Yelp.prototype.resetMarkers = function( )
 {
 	var ix;
 	var allMarkerIx;
 
+	//go through all map markers
 	for( ix in  this.map.mapMarkers)
 	{
-		 
-		 	for(allMarkerIx in this.yelpData.markers)
-			{
+	
+		//match them against the map markers that are currently being shown
+		for(allMarkerIx in this.yelpData.markers)
+		{
 			var currMarker = this.map.mapMarkers[ix];
 			var yelpMarker =  this.yelpData.markers[allMarkerIx];
 			if(yelpMarker && currMarker)
