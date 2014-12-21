@@ -14,7 +14,7 @@ var infoWindowContentMobile = '<div id="content" class="infoWindowPano" style="w
 var infoWindowDetails =		''+
 											' NAME<br/>'+
 											'  ADDRESS <br/> '+
-											' <a href="REVIEWURL" target="_new">REVIEW reviews</a><br/>'+
+											' <a href="REVIEWURL" target="_blank">REVIEW reviews</a><br/>'+
 											'DEALS'+
 											'<center><img src="IMAGE" style="left:0:top:0;height:145px" /></center> ';
 
