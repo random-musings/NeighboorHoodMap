@@ -58,7 +58,7 @@ var YelpResultsView = function()
 */	
  this.clearRetailers = function()
  {
-			this.retailers.removeAll();
+	this.retailers.removeAll();
  };
  
 /* 
@@ -69,7 +69,7 @@ var YelpResultsView = function()
 */	
  this.clearMarkers = function()
  {
-			this.markers.removeAll();
+	this.markers.removeAll();
  };
  
 };

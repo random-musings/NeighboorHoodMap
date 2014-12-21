@@ -4,7 +4,7 @@ https://github.com/random-musings/NeighboorHoodMap
 
 How to use
 A working demo of the map is here 
-http://www.scr-inc.com/yelp/neighborhood/neighborhoodview.html
+http://www.scr-inc.com/yelp/neighborhood/index.html
 copy the above link into the address bar of a web browser like firefox, chrome or ie
 
 To customize this for your website you need to switch out the yelp API Keys
@@ -92,4 +92,16 @@ Navigation
 * << and >> scroll through the list of restaurants
 * The --> and <-- buttons will move the business list to the left or right side of the screen.
 * The business name in the list is clickable it will bring up the restaurants yelp window.
+
+
+
+MVVM 
+knockout Model is kept in the class YelpResultsView.
+the data retreived from yelp is help int he YelpData class in the  businesses array.
+the YelpResultsView is loaded/unloaded according to the actions taken by the user.
+The YelpData businesses array never changes once data has been downloaded from Yelp.
+
+
+Additional Notes
+in order to display the "Deals" functionality I have manually added yelp restaurants with  deals.
 
